@@ -3,7 +3,6 @@ package com.cts.avin.di.modules
 
 import android.app.Application
 import android.content.Context
-import android.net.NetworkInfo
 import android.util.Log
 
 import com.cts.avin.network.ApiService
@@ -12,11 +11,9 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 import javax.inject.Inject
-import javax.inject.Singleton
 
 import dagger.Module
 import dagger.Provides
@@ -24,8 +21,6 @@ import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -57,20 +52,20 @@ class AppModule {
         }
 
     @Provides
-    internal fun provideHttpCache(application: Application): Cache {
+     fun provideHttpCache(application: Application): Cache {
         val cacheSize = 10 * 1024 * 1024
         return Cache(application.cacheDir, cacheSize.toLong())
     }
 
     @Provides
-    internal fun provideGson(): Gson {
+     fun provideGson(): Gson {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         return gsonBuilder.create()
     }
 
     @Provides
-    internal fun provideOkhttpClient(cache: Cache, interceptor: Interceptor): OkHttpClient {
+     fun provideOkhttpClient(cache: Cache, interceptor: Interceptor): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         // set your desired log level
         logging.level = HttpLoggingInterceptor.Level.BODY
@@ -83,7 +78,7 @@ class AppModule {
     }
 
     @Provides
-    internal fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
 
         return Retrofit.Builder().baseUrl(Constant.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -93,11 +88,11 @@ class AppModule {
     }
 
     @Provides
-    internal fun provideInterceptor(): Interceptor {
-        return { chain ->
+     fun provideInterceptor(): Interceptor {
+        return Interceptor{ chain ->
             val original = chain.request()
-            val requestBuilder = original.newBuilder()
-            val cacheControl: CacheControl
+            var requestBuilder = original.newBuilder()
+            lateinit var cacheControl: CacheControl
             // removing any existing cache control definition
             requestBuilder.addHeader("Accept", "application/json;version=10")
                     .addHeader("Content-Type", "application/json")
@@ -125,7 +120,7 @@ class AppModule {
     companion object {
 
         @Provides
-        internal fun provideRetrofitService(retrofit: Retrofit): ApiService.ApiInterface {
+         fun provideRetrofitService(retrofit: Retrofit): ApiService.ApiInterface {
             return retrofit.create(ApiService.ApiInterface::class.java!!)
         }
     }

@@ -84,7 +84,7 @@ class AboutListFragment : BaseFragment(), AboutListItemSelectedListener {
      * */
     internal fun makeMainListCall() {
 
-        mViewModel!!.progressDialog.observe(this, { isLoading ->
+        mViewModel!!.progressDialog.observe(this, Observer{ isLoading ->
             if (isLoading != null) {
                 mLoadingView!!.visibility = if (isLoading) View.VISIBLE else View.GONE
                 if (isLoading!!) {
@@ -97,7 +97,7 @@ class AboutListFragment : BaseFragment(), AboutListItemSelectedListener {
             mSwipeRefresh!!.isRefreshing = false
             activity!!.title = listData!!.title
             mMainListData = listData
-            mAboutListAdapter!!.data = mMainListData!!.rows
+            mAboutListAdapter!!.data = mMainListData!!.rows!!
             mErrorTextView!!.visibility = View.GONE
             mListView!!.visibility = View.VISIBLE
         })

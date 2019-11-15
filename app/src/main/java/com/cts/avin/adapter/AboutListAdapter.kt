@@ -36,7 +36,7 @@ class AboutListAdapter(private val itemSelectedListener: AboutListItemSelectedLi
         return data.size
     }
 
-    internal inner class ItemViewHolder(itemView: View, itemSelectedListener: AboutListItemSelectedListener) : RecyclerView.ViewHolder(itemView) {
+     inner class ItemViewHolder(itemView: View, itemSelectedListener: AboutListItemSelectedListener) : RecyclerView.ViewHolder(itemView) {
         @BindView(R.id.tv_name)
         var tvName: TextView? = null
         @BindView(R.id.tv_desc)

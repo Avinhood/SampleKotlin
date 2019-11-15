@@ -21,15 +21,15 @@ abstract class FeatureModule {
     @Binds
     @IntoMap
     @ViewModelKey(AboutListViewModel::class)
-    internal abstract fun bindMainListViewModel(mainViewModel: AboutListViewModel): ViewModel
+    abstract fun bindMainListViewModel(mainViewModel: AboutListViewModel): ViewModel
 
     @Binds
-    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
     @ContributesAndroidInjector(modules = [FragmentBindingModule::class])
-    internal abstract fun contributeActivityInjector(): HomeActivity
+    abstract fun contributeActivityInjector(): HomeActivity
 
     @Binds
-    internal abstract fun provideContext(application: Application): Context
+    abstract fun provideContext(application: Application): Context
 
 }

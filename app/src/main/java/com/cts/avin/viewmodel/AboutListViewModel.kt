@@ -30,7 +30,7 @@ constructor(private val repoRepository: ApiService) : BaseViewModel() {
     fun makeMainListCall() {
         progressDialog.postValue(true)
         disposable!!.add(repoRepository.mainList.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith<Single>(object : DisposableSingleObserver<ListData>() {
+                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object : DisposableSingleObserver<ListData>() {
                     override fun onSuccess(listData: ListData) {
                         mainListData.postValue(listData)
                         progressDialog.postValue(false)

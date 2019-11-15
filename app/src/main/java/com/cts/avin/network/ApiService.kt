@@ -1,12 +1,12 @@
 package com.cts.avin.network
 
 import com.cts.avin.data.main.ListData
-import com.cts.avin.util.Constant
 
 import javax.inject.Inject
 
 import io.reactivex.Single
 import retrofit2.http.GET
+import com.cts.avin.util.Constant
 
 
 class ApiService @Inject

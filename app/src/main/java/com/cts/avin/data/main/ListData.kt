@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 class ListData {
 
     @SerializedName("title")
-    var title: String
+     var title: String? = null
     @SerializedName("rows")
-    var rows: List<Rows>
+     var rows: List<Rows>? = null
 }
